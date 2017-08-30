@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Carsdatabase</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="app_title">Cars database</string>
+    <string name="tab_title_owner">OWNERS</string>
+    <string name="tab_title_car">CARS</string>
+    <string name="personal_data">Personal data</string>
+    <string name="garage">Garage</string>
+    <string name="add_car_brand">Brand:</string>
+    <string name="add_car_model">Model:</string>
+    <string name="add_car_year">Year of production:</string>
+    <string name="add_car_regnumber">Licence plate:</string>
+    <string name="btn_save_text">Save</string>
+    <string name="add_owner_name">Name:</string>
+    <string name="add_owner_midname">Middle name:</string>
+    <string name="add_owner_surname">Surname:</string>
+    <string name="add_owner_passport">Passport #:</string>
+    <string name="add_owner_address">Address:</string>
+    <string name="owner_text">Owner:</string>
+    <string name="calncel_text">Cancel</string>
+    <string name="regnumer_short_text">Plate #:</string>
+    <string name="cars_number">Cars number:</string>
+    <string name="add_owner_data">Owner detaiil</string>
+    <string name="car_details_text">Car details</string>
+    <string name="message">Message</string>
+    <string name="no_free_cars_msg">Currently there are no cars without an owner.</string>
+    <string name="ok_text">OK</string>
+</resources>

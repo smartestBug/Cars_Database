@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#125688</color>
+    <color name="colorPrimaryDark">#125688</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#ff1744</color>
+
+    <color name="tab_background_selected">#e1e1e1</color>
+    <color name="tab_background_unselected">#cacaca</color>
+    <color name="tab_unselected_text_color">#404040</color>
+    <color name="tab_selected_text_color">#404040</color>
+    <color name="rv_car_item_bg_color">#a0d5fb</color>
+
+</resources>

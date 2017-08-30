@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Автобаза</string>
+    <string name="action_settings">Настройки</string>
+
+    <string name="app_title">База автомобилей</string>
+    <string name="tab_title_owner">ВЛАДЕЛЬЦЫ</string>
+    <string name="tab_title_car">АВТОМОБИЛИ</string>
+    <string name="personal_data">Личные данные</string>
+    <string name="garage">Гараж</string>
+    <string name="add_car_brand">Производитель:</string>
+    <string name="add_car_model">Модель:</string>
+    <string name="add_car_year">Год выпуска:</string>
+    <string name="add_car_regnumber">Регистрационный номер:</string>
+    <string name="btn_save_text">Сохранить</string>
+    <string name="add_owner_name">Имя:</string>
+    <string name="add_owner_midname">Отчество:</string>
+    <string name="add_owner_surname">Фамилия:</string>
+    <string name="add_owner_passport">Паспорт №:</string>
+    <string name="add_owner_address">Адрес:</string>
+    <string name="owner_text">Владелец:</string>
+    <string name="calncel_text">Отмена</string>
+    <string name="regnumer_short_text">Госномер:</string>
+    <string name="cars_number">Количество машин:</string>
+    <string name="add_owner_data">Данные о владельце</string>
+    <string name="car_details_text">Данные об автомобиле</string>
+    <string name="message">Сообщение</string>
+    <string name="no_free_cars_msg">В данное время нет ни одного автомобиля без хозяина.</string>
+    <string name="ok_text">ОК</string>
+</resources>
