@@ -2,11 +2,18 @@ package com.msemyak.carsdb.model;
 
 public class Car {
 
+    // объект автомобиля
+    // id
     private int id;
+    // id владельца, которому принадлежит этот автомобиль
     private int owner_id;
+    // производитель
     private String brand;
+    // модель
     private String model;
+    // год выпуска
     private String year;
+    // регистрационный номер
     private String regnumber;
 
     public Car() {

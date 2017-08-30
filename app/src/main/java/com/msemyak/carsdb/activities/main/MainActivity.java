@@ -26,8 +26,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabViewAdapter tabAdapter;
-
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.toolbar)
@@ -44,19 +42,25 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        // указываем на свой кастомный тулбар
         setSupportActionBar(toolbar);
 
+        // настраиваем viewPager для листания вкладок
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
 
+        // цепляем иконки к вкладкам
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_man);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_car);
 
+        // нам могут передать информацию, какую вкладку следует открыть при старте этой активити - считываем, что прислали
         int tabToOpen = getIntent().getIntExtra("tab_to_open", 0);
         viewPager.setCurrentItem(tabToOpen);
 
     }
 
+    // обработчик нажатий на плавающую кнопку
+    // в зависимости от того, какая вкладка сейчас активна, идем или к созданию нового пользователя или автомобиля
     @OnClick(R.id.fab)
     public void onButtonClick(View view) {
         startActivity((tabLayout.getSelectedTabPosition() == 0) ?
@@ -65,32 +69,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        tabAdapter = new TabViewAdapter(getSupportFragmentManager());
+        TabViewAdapter tabAdapter = new TabViewAdapter(getSupportFragmentManager());
         tabAdapter.addFragment(new OwnersListFragment(), getString(R.string.tab_title_owner));
         tabAdapter.addFragment(new CarsListFragment(), getString(R.string.tab_title_car));
         viewPager.setAdapter(tabAdapter);
     }
 
-    // Event bus
+    // слушатель шины Event bus
+    // из фрагментов OwnersListFragment и CarsListFragment приходит оповещение нужно ли скрыть или показать плавающую кнопку добавления (+)
     @Subscribe
     public void onMessageEvent(eventFabVisible fabVisibility) {
-
         if (fabVisibility.visible) fab.show();
         else fab.hide();
 
     }
 
-    ;
-
     @Override
     protected void onStart() {
         super.onStart();
+
+        //регистрируем слушателя шины
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        //удаляем слушателя шины
         EventBus.getDefault().unregister(this);
     }
 }

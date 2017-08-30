@@ -31,9 +31,9 @@ public class AddEditCarActivity extends AppCompatActivity implements AddEditCarC
     @BindView(R.id.et_regnumber)
     EditText etRegnumber;
 
-    AddEditCarContract.Presenter myPresenter;
+    private AddEditCarContract.Presenter myPresenter;
 
-    int carId;
+    private int carId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +45,23 @@ public class AddEditCarActivity extends AppCompatActivity implements AddEditCarC
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // получаем id автомобиля при старте этой активити
+        // если id есть - будем редактировать существующий авто
+        // если нет - создаем новый (в этом случае идентификатор будет равен NO_SUCH_ID)
         carId = getIntent().getIntExtra("car_id", AddEditCarActivityPresenter.NO_SUCH_ID);
 
+        // создаем презентер, который инициирует данные и сразу попросит их отобразить
         myPresenter = new AddEditCarActivityPresenter(this, carId);
 
     }
 
+    // просим презентера сохранить данные об автомобиле
     @OnClick(R.id.btn_save_car_data)
     public void onButtonClick(View view) {
-
         myPresenter.addOrUpdateCar(carId, etBrand.getText().toString(), etModel.getText().toString(), etYear.getText().toString(), etRegnumber.getText().toString());
-
     }
 
+    // показываем данные автомобиля
     @Override
     public void showCarData(String brand, String model, String year, String regnumber) {
         etBrand.setText(brand);
@@ -66,6 +70,7 @@ public class AddEditCarActivity extends AppCompatActivity implements AddEditCarC
         etRegnumber.setText(regnumber);
     }
 
+    // переход к списку
     @Override
     public void navigateToCarList(int ownerId) {
         Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -74,6 +79,7 @@ public class AddEditCarActivity extends AppCompatActivity implements AddEditCarC
         startActivity(mainIntent);
     }
 
+    // определяем что делать при нажатии кнопки навигации в тулбаре
     @Override
     public boolean onSupportNavigateUp() {
         setResult(Activity.RESULT_OK);

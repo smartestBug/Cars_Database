@@ -38,26 +38,26 @@ public class CarsListFragment extends Fragment implements CarsListContract.View,
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_car, container, false);
         ButterKnife.bind(this, view);
 
+        // создадим презентер для этого фрагмента
         myPresenter = new CarsListFragmentPresenter(this);
 
+        // создадим событие для Event Bus загодя
         fabVisibility = new eventFabVisible();
 
+        // обработчик прокрутки для того, чтобы убрать или показать плавающую кнопку
         rvCars.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0) {
+                    // шлем просьбу спрятать плавающую кнопку по шине
                     EventBus.getDefault().post(fabVisibility.setVisibility(false));
                 } else {
+                    // шлем просьбу показать плавающую кнопку по шине
                     EventBus.getDefault().post(fabVisibility.setVisibility(true));
                 }
 
@@ -68,6 +68,7 @@ public class CarsListFragment extends Fragment implements CarsListContract.View,
         return view;
     }
 
+    // создаем адаптер и показываем список всех автомобилей
     @Override
     public void showCarsList(List<Car> carsList) {
 
@@ -77,6 +78,7 @@ public class CarsListFragment extends Fragment implements CarsListContract.View,
         rvCars.setAdapter(listAdapter);
     }
 
+    // просим адаптер обновить данные списка
     @Override
     public void notifyDataChange(int position, int size) {
         listAdapter.notifyItemRemoved(position);

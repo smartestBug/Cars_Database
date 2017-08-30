@@ -17,18 +17,22 @@ public class OwnersListFragmentPresenter implements OwnersListContract.Presenter
     @Inject
     DBEngine dbController;
 
-    public OwnersListFragmentPresenter(OwnersListContract.View myView) {
+    OwnersListFragmentPresenter(OwnersListContract.View myView) {
         this.myView = myView;
         CarManagerApplication.getDatabaseEngineComponent().inject(this);
 
         initOwnersData();
     }
 
+    // получаем список владельцев из базы, просим view показать
     private void initOwnersData() {
         ownersData = dbController.getAllOwners();
 
         ownerCarCount = new ArrayList<>();
 
+        // формируем список количества авто по каждому владельцу
+        // не самое удачное решение
+        // TODO - рефакторить
         for (int i = 0; i < ownersData.size(); i++) {
             ownerCarCount.add(i, dbController.getOwnerCarsCount(ownersData.get(i).getId()));
         }
@@ -36,10 +40,12 @@ public class OwnersListFragmentPresenter implements OwnersListContract.Presenter
         myView.showOwnersList(ownersData, ownerCarCount);
     }
 
+    // удаляем данные, просим view среагировать
     @Override
     public void removeDataAtPosition(int position) {
         dbController.deleteOwner(ownersData.get(position).getId());
         ownersData.remove(position);
+        ownerCarCount.remove(position);
         myView.notifyDataChange(position, ownersData.size());
     }
 

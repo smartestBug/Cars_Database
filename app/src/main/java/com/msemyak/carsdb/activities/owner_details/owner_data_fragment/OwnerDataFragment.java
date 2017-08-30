@@ -15,8 +15,6 @@ import butterknife.ButterKnife;
 
 public class OwnerDataFragment extends Fragment implements OwnerDataContract.View {
 
-    private int ownerId;
-
     @BindView(R.id.tv_owner_name)
     TextView tvOwnerName;
     @BindView(R.id.tv_owner_midname)
@@ -39,12 +37,17 @@ public class OwnerDataFragment extends Fragment implements OwnerDataContract.Vie
         View view = inflater.inflate(R.layout.fragment_owner_data, container, false);
         ButterKnife.bind(this, view);
 
-        ownerId = getArguments().getInt("owner_id");
+        // получаем аргументы - id владельца
+        int ownerId = getArguments().getInt("owner_id");
 
+        // создаем новый презентер
         myPresenter = new OwnerDataFragmentPresenter(this);
 
+        // получаем данные о владельце
+        // TODO - нужно эту логику переносить в презентер
         Owner owner = myPresenter.getOwner(ownerId);
 
+        // показываем данные о владельце
         tvOwnerName.setText(owner.getName());
         tvOwnerMidname.setText(owner.getMidname());
         tvOwnerSurname.setText(owner.getSurname());

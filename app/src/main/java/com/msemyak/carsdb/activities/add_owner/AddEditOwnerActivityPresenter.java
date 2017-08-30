@@ -11,13 +11,14 @@ public class AddEditOwnerActivityPresenter implements AddEditOwnerContract.Prese
     private AddEditOwnerContract.View myView;
     @Inject
     DBEngine dbController;
-    public static final int NO_SUCH_ID = -1;
+    static final int NO_SUCH_ID = -1;
 
-    public AddEditOwnerActivityPresenter(AddEditOwnerContract.View myView, int ownerId) {
+    AddEditOwnerActivityPresenter(AddEditOwnerContract.View myView, int ownerId) {
 
         this.myView = myView;
         CarManagerApplication.getDatabaseEngineComponent().inject(this);
 
+        // если id владельца существующее, то показываем данные про этого владельца
         if (ownerId != NO_SUCH_ID) {
             Owner owner = dbController.getOwner(ownerId);
             myView.showOwnerData(owner.getName(), owner.getMidname(), owner.getSurname(), owner.getPassport(), owner.getAddress());
@@ -30,9 +31,12 @@ public class AddEditOwnerActivityPresenter implements AddEditOwnerContract.Prese
 
         Owner owner = new Owner(ownerId, name, midname, surname, passport, address);
 
+        // если id владельца не существует, то сохраняем нового владельца
+        // иначе обновляем существующего
         if (ownerId == NO_SUCH_ID) ownerId = dbController.addOwner(owner);
         else dbController.updateOwner(owner);
 
+        // делаем работу и просим View перейти куда нужно
         myView.navigateToOwnerDetailsActivity(ownerId);
     }
 

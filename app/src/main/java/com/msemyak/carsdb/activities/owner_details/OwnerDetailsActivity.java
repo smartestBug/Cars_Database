@@ -32,9 +32,6 @@ import butterknife.OnClick;
 public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDetailsContract.View, RVItemClickListener {
 
     private OwnerDetailsContract.Presenter myPresenter;
-    private TabViewAdapter tabAdapter;
-    private OwnerDataFragment ownerDataFragment;
-    private OwnerGarageFragment ownerGarageFragment;
     private Owner owner;
     private int ownerId;
     private int tabToOpen;
@@ -57,6 +54,7 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
 
         myPresenter = new OwnerDetailsActivityPresenter(this);
 
+        // полцчаем аргументы - id владельца и какую вкладку открывать
         ownerId = getIntent().getIntExtra("owner_id", 0);
         tabToOpen = getIntent().getIntExtra("tab_to_open", 0);
 
@@ -74,6 +72,7 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
         tabLayout.setupWithViewPager(vPager);
         setFabIcon(tabToOpen);
 
+        // устанавливаем слушатель на переключение вкладок - нужно для смены иконки на поавающей кнопке
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -97,6 +96,7 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
         toolbar.setTitle(owner.getName() + " " + owner.getSurname());
     }
 
+    // переключение иконок на плавающей кнопке в зависимости от выбранной вкладки
     private void setFabIcon(int selectedTabPosition) {
         fabProfile.setImageDrawable((selectedTabPosition == 0) ?
                 ContextCompat.getDrawable(this, R.drawable.ic_edit) :
@@ -110,6 +110,9 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
         return true;
     }
 
+    // обработчик нажатия на плавающую кнопку
+    // если нажата при вкладке 0 (данные владельца), то отправляемся редактироваль эти данные
+    // если при вкладке 1 (гараж владельца), то нужно добавить к гаражу автомобиль - показываем диалоговое окно со списком автомобилей
     @OnClick(R.id.fab_profile)
     public void onButtonClick(View view) {
         if (tabLayout.getSelectedTabPosition() == 0) {
@@ -117,7 +120,9 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
             editIntent.putExtra("owner_id", ownerId);
             startActivity(editIntent);
         } else {
+            // если нет свободных авто (у каждого есть свой владелец), показываем сообщение
             if (myPresenter.getCarsWithoutOwnerCount() == 0) showNoFreeCarsAlert();
+            //иначе показываем инициируем данные для списка с доступными автомобилями
             else myPresenter.initCarsWithoutOwnerList();
         }
     }
@@ -128,6 +133,7 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
         carChoose.show();
     }
 
+    // сообщение, что нет незанятых автомобилей
     private void showNoFreeCarsAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.message)
@@ -144,15 +150,15 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
     }
 
     private void setupViewPager(ViewPager viewPager, int ownerId) {
-        tabAdapter = new TabViewAdapter(getSupportFragmentManager());
+        TabViewAdapter tabAdapter = new TabViewAdapter(getSupportFragmentManager());
 
         Bundle bundle = new Bundle();
         bundle.putInt("owner_id", ownerId);
 
-        ownerDataFragment = new OwnerDataFragment();
+        OwnerDataFragment ownerDataFragment = new OwnerDataFragment();
         ownerDataFragment.setArguments(bundle);
 
-        ownerGarageFragment = new OwnerGarageFragment();
+        OwnerGarageFragment ownerGarageFragment = new OwnerGarageFragment();
         ownerGarageFragment.setArguments(bundle);
 
         tabAdapter.addFragment(ownerDataFragment, getString(R.string.personal_data));
@@ -161,11 +167,14 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
         viewPager.setAdapter(tabAdapter);
     }
 
+    // обработчик нажатия на списке со свободными автомобилями
     @Override
     public void onRVItemClick(View v, int carId) {
 
+        // связываем автомобиль и владельца
         myPresenter.linkCarToOwner(ownerId, carId);
 
+        // переходим на информацию о владельце
         Intent carIntent = new Intent(this, OwnerDetailsActivity.class);
         carIntent.putExtra("car_id", carId);
         carIntent.putExtra("owner_id", ownerId);

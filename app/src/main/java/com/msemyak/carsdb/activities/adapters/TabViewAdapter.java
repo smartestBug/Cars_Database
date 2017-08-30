@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// адаптер вкладок
 public class TabViewAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> fragmentsList = new ArrayList<>();

@@ -15,17 +15,19 @@ public class CarsListFragmentPresenter implements CarsListContract.Presenter {
     @Inject
     DBEngine dbController;
 
-    public CarsListFragmentPresenter(CarsListContract.View myView) {
+    CarsListFragmentPresenter(CarsListContract.View myView) {
         this.myView = myView;
         CarManagerApplication.getDatabaseEngineComponent().inject(this);
-        initOwnersData();
+        initCarsData();
     }
 
-    private void initOwnersData() {
+    // получаем список авто из базы, просим view показать
+    private void initCarsData() {
         carsData = dbController.getAllCars();
         myView.showCarsList(carsData);
     }
 
+    // удаляем данные, просим view среагировать
     @Override
     public void removeDataAtPosition(int position) {
         dbController.deleteCar(carsData.get(position).getId());

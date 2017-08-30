@@ -28,9 +28,11 @@ public class OwnerGarageFragment extends Fragment implements OwnerGarageContract
     private int ownerId;
     private OwnerGarageContract.Presenter myPresenter;
 
-    @BindView(R.id.rv_owner_cars) RecyclerView rvCars;
+    @BindView(R.id.rv_owner_cars)
+    RecyclerView rvCars;
 
-    public OwnerGarageFragment() { }
+    public OwnerGarageFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,8 +42,10 @@ public class OwnerGarageFragment extends Fragment implements OwnerGarageContract
 
         ButterKnife.bind(this, view);
 
+        // получаем аргументы - id владельца с которым работать
         ownerId = getArguments().getInt("owner_id");
 
+        //создаем презентер, инициируем данные
         myPresenter = new OwnerGarageFragmentPresenter(ownerId, this);
 
         return view;

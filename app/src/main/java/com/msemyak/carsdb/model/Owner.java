@@ -2,11 +2,18 @@ package com.msemyak.carsdb.model;
 
 public class Owner {
 
+    // объект владельца
+    // id
     private int id;
+    // имя
     private String name;
+    // отчество
     private String midname;
+    // фамилия
     private String surname;
+    // номер паспорта
     private String passport;
+    // адрес
     private String address;
 
     public Owner() {

@@ -9,10 +9,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+// модуль даггера для инъекции объекта управления базой данных
+// дает нам объект класса DBEngine, Context получаем при инициации
 @Module
 public class DatabaseEngineModule {
 
-    private static Context context;
+    private Context context;
 
     public DatabaseEngineModule(Context context) {
         this.context = context;
@@ -20,7 +22,7 @@ public class DatabaseEngineModule {
 
     @Provides
     @Singleton
-    public DBEngine provideDBEngine() {
+    DBEngine provideDBEngine() {
         return new DBEngine(context);
     }
 

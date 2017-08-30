@@ -37,8 +37,6 @@ public class CarDetailsActivity extends AppCompatActivity implements CarDetailsC
 
     private CarDetailsContract.Presenter myPresenter;
     private int carId;
-    private Car car;
-    private Owner carOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +48,25 @@ public class CarDetailsActivity extends AppCompatActivity implements CarDetailsC
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // получаем переданный id автомобиля
         carId = getIntent().getIntExtra("car_id", 0);
 
         myPresenter = new CarDetailsActivityPresenter(this);
 
-        car = myPresenter.getCar(carId);
+        // получаем объект автомобиля
+        // вообще, для View это слишком много логики
+        // TODO - рефакторить, переносить логику в презентер
+        Car car = myPresenter.getCar(carId);
 
+        // данные о машине
         tvCarBrand.setText(car.getBrand());
         tvCarModel.setText(car.getModel());
         tvCarYear.setText(car.getYear());
         tvCarRegnumber.setText(car.getRegnumber());
 
+        // смотрим кто владелец
         if (car.getOwnerId() != 0) {
-            carOwner = myPresenter.getOwner(car.getOwnerId());
+            Owner carOwner = myPresenter.getOwner(car.getOwnerId());
             tvCarOwner.setText(carOwner.getName() + " " + carOwner.getSurname());
         } else
             tvCarOwner.setText("нет");

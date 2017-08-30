@@ -3,7 +3,6 @@ package com.msemyak.carsdb.activities.owner_details;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,20 +22,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChooseCarDialog extends Dialog {
+class ChooseCarDialog extends Dialog {
 
     @BindView(R.id.rv_cars_chooser)
     RecyclerView rvDialogCars;
     @BindView(R.id.btn_dialog_close)
     Button btnDialogClose;
 
-    private RVAdapterCar rvDialogAdapter;
-    private RecyclerView.LayoutManager rvLayoutManager;
-    int ownerId;
+    private int ownerId;
     private List<Car> carsWithoutOwnerList;
     private RVItemClickListener clickListener;
 
-    public ChooseCarDialog(Context context, int ownerId, List<Car> carsWithoutOwnersList, RVItemClickListener clickListener) {
+    ChooseCarDialog(Context context, int ownerId, List<Car> carsWithoutOwnersList, RVItemClickListener clickListener) {
         super(context);
         this.ownerId = ownerId;
         this.carsWithoutOwnerList = carsWithoutOwnersList;
@@ -54,32 +51,22 @@ public class ChooseCarDialog extends Dialog {
         setOnCancelListener(new OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                navigateToOwnerDetailsActivity();
+                cancel();
             }
         });
 
         ButterKnife.bind(this);
 
-        rvLayoutManager = new LinearLayoutManager(getContext());
-        rvDialogCars.setLayoutManager(rvLayoutManager);
+        rvDialogCars.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rvDialogAdapter = new RVAdapterCar(carsWithoutOwnerList, RVAdapterCar.LIST_WITHOUT_DELETE_BUTTON, clickListener);
+        RVAdapterCar rvDialogAdapter = new RVAdapterCar(carsWithoutOwnerList, RVAdapterCar.LIST_WITHOUT_DELETE_BUTTON, clickListener);
         rvDialogCars.setAdapter(rvDialogAdapter);
 
     }
 
     @OnClick(R.id.btn_dialog_close)
-    public void onButtonClick(View view) {
-
-        navigateToOwnerDetailsActivity();
+    public void onButtonClick() {
+        cancel();
     }
-
-    private void navigateToOwnerDetailsActivity() {
-        Intent carIntent = new Intent(getContext(), OwnerDetailsActivity.class);
-        carIntent.putExtra("owner_id", ownerId);
-        carIntent.putExtra("tab_to_open", 1);
-        getContext().startActivity(carIntent);
-    }
-
 
 }

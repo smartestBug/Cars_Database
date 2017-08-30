@@ -47,8 +47,12 @@ public class AddEditOwnerActivity extends AppCompatActivity implements AddEditOw
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // получаем id владельца при старте этой активити
+        // если id есть - будем редактировать существующего владельца
+        // если нет - создаем нового (в этом случае идентификатор будет равен NO_SUCH_ID)
         ownerId = getIntent().getIntExtra("owner_id", AddEditOwnerActivityPresenter.NO_SUCH_ID);
 
+        // создаем презентер, который инициирует данные и сразу попросит их отобразить
         myPresenter = new AddEditOwnerActivityPresenter(this, ownerId);
 
     }
@@ -77,6 +81,7 @@ public class AddEditOwnerActivity extends AppCompatActivity implements AddEditOw
         startActivity(profileIntent);
     }
 
+    // определяем что делать при нажатии кнопки навигации в тулбаре
     @Override
     public boolean onSupportNavigateUp() {
         setResult(Activity.RESULT_OK);

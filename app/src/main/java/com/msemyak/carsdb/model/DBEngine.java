@@ -12,30 +12,35 @@ import java.util.List;
 
 public class DBEngine extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "CarsAndOwners.db";
-    public static final int DATABASE_VERSION = 1;
+    // имя и версия базы данных
+    private static final String DATABASE_NAME = "CarsAndOwners.db";
+    private static final int DATABASE_VERSION = 1;
 
-    public static final String OWNERS_TABLE_NAME = "owners";
-    public static final String OWNERS_COLUMN_ID = "id";
-    public static final String OWNERS_COLUMN_NAME = "name";
-    public static final String OWNERS_COLUMN_MIDNAME = "midname";
-    public static final String OWNERS_COLUMN_SURNAME = "surname";
-    public static final String OWNERS_COLUMN_PASSPORT = "passport";
-    public static final String OWNERS_COLUMN_ADDRESS = "address";
+    // определим поля таблицы с владельцами
+    private static final String OWNERS_TABLE_NAME = "owners";
+    private static final String OWNERS_COLUMN_ID = "id";
+    private static final String OWNERS_COLUMN_NAME = "name";
+    private static final String OWNERS_COLUMN_MIDNAME = "midname";
+    private static final String OWNERS_COLUMN_SURNAME = "surname";
+    private static final String OWNERS_COLUMN_PASSPORT = "passport";
+    private static final String OWNERS_COLUMN_ADDRESS = "address";
 
-    public static final String CARS_TABLE_NAME = "cars";
-    public static final String CARS_COLUMN_ID = "id";
-    public static final String CARS_COLUMN_OWNERID = "owner_id";
-    public static final String CARS_COLUMN_BRAND = "brand";
-    public static final String CARS_COLUMN_MODEL = "model";
-    public static final String CARS_COLUMN_YEAR = "year";
-    public static final String CARS_COLUMN_REGNUMBER = "regnumber";
-
+    // определим поля таблицы с автомобилями
+    private static final String CARS_TABLE_NAME = "cars";
+    private static final String CARS_COLUMN_ID = "id";
+    private static final String CARS_COLUMN_OWNERID = "owner_id";
+    private static final String CARS_COLUMN_BRAND = "brand";
+    private static final String CARS_COLUMN_MODEL = "model";
+    private static final String CARS_COLUMN_YEAR = "year";
+    private static final String CARS_COLUMN_REGNUMBER = "regnumber";
 
     public DBEngine(Context context) {
+
+        //вызов предшественника создаст базу данных
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // создадим таблицы
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -68,6 +73,8 @@ public class DBEngine extends SQLiteOpenHelper {
 
     }
 
+    // при обновлении версии базы делаем что нам нужно для работы с новой версией
+    // в нашем случае просто удаляем таблицы и создаем новые (наш случай, в принципе пока не наступает)
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -86,6 +93,7 @@ public class DBEngine extends SQLiteOpenHelper {
      *
      ************************/
 
+    // добавить новый автомобиль
     public int addCar(Car car) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -103,16 +111,19 @@ public class DBEngine extends SQLiteOpenHelper {
         return newCar;
     }
 
+    // возвращает список всех автомобилей
     public List<Car> getAllCars() {
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME;
         return execQueryReturnCarLIst(selectQuery);
     }
 
+    // возвращает список всех автомобилей без владельца
     public List<Car> getAllCarsWithoutOwner() {
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + " = 0";
         return execQueryReturnCarLIst(selectQuery);
     }
 
+    // возвращает владельца конкретного автомобиля
     public List<Car> getOwnerCars(int ownerId) {
 
         String selectQuery = "SELECT  * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + "=" + ownerId;
@@ -139,9 +150,12 @@ public class DBEngine extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
         return carsList;
     }
 
+    // возвращает количество автомобилей, которые не принадлежат никомуу
     public int getCarsWithoutOwnerCount() {
 
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + " = 0";
@@ -154,6 +168,7 @@ public class DBEngine extends SQLiteOpenHelper {
         return count;
     }
 
+    // возвращает конкретный автомобиль
     public Car getCar(int id) {
 
         String selectQuery = "SELECT  * FROM " + CARS_TABLE_NAME + " WHERE id=" + id;
@@ -164,15 +179,18 @@ public class DBEngine extends SQLiteOpenHelper {
 
         Car car = new Car(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
 
+        cursor.close();
         return car;
     }
 
+    // удаляем автомобиль
     public void deleteCar(int carId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(CARS_TABLE_NAME, CARS_COLUMN_ID + " = ?", new String[]{String.valueOf(carId)});
         db.close();
     }
 
+    // обновляем данные про автомобиль
     public int updateCar(Car car) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -186,6 +204,7 @@ public class DBEngine extends SQLiteOpenHelper {
         return db.update(CARS_TABLE_NAME, values, CARS_COLUMN_ID + " = ?", new String[]{String.valueOf(car.getId())});
     }
 
+    // связываем владельца и автомобиль
     public int linkCarToOwner(int ownerId, int carId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -204,6 +223,7 @@ public class DBEngine extends SQLiteOpenHelper {
      *
      ************************/
 
+    // создаем нового владельца
     public int addOwner(Owner owner) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -221,13 +241,23 @@ public class DBEngine extends SQLiteOpenHelper {
         return newOwner;
     }
 
-
+    // удаляем владельца
     public void deleteOwner(int ownerId) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // удаляем и владельца...
         db.delete(OWNERS_TABLE_NAME, OWNERS_COLUMN_ID + " = ?", new String[]{String.valueOf(ownerId)});
+
+        // и связи этого человека с автомобилями, которые с ним связаны
+        ContentValues values = new ContentValues();
+        values.put(CARS_COLUMN_OWNERID, 0);
+
+        db.update(CARS_TABLE_NAME, values, CARS_COLUMN_OWNERID + " = ?", new String[]{String.valueOf(ownerId)});
+
         db.close();
     }
 
+    // возвращает конкретного пользователя
     public Owner getOwner(int id) {
 
         String selectQuery = "SELECT  * FROM " + OWNERS_TABLE_NAME + " WHERE id=" + id;
@@ -238,9 +268,11 @@ public class DBEngine extends SQLiteOpenHelper {
 
         Owner owner = new Owner(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
 
+        cursor.close();
         return owner;
     }
 
+    // обновление записи конкретного владельца
     public int updateOwner(Owner owner) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -254,6 +286,7 @@ public class DBEngine extends SQLiteOpenHelper {
         return db.update(OWNERS_TABLE_NAME, values, OWNERS_COLUMN_ID + " = ?", new String[]{String.valueOf(owner.getId())});
     }
 
+    // возвращает количество автомобилей, принадлежащих конкретному владельцу
     public int getOwnerCarsCount(int ownerId) {
 
         String countQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + "=" + ownerId;
@@ -264,6 +297,7 @@ public class DBEngine extends SQLiteOpenHelper {
         return count;
     }
 
+    // возвращает список всех владельцев
     public List<Owner> getAllOwners() {
         List<Owner> ownersList = new ArrayList<>();
 
@@ -284,6 +318,8 @@ public class DBEngine extends SQLiteOpenHelper {
                 ownersList.add(owner);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
         return ownersList;
     }
 

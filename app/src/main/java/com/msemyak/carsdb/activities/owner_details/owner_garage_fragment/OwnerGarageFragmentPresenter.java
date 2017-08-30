@@ -12,10 +12,11 @@ public class OwnerGarageFragmentPresenter implements OwnerGarageContract.Present
 
     private OwnerGarageContract.View myView;
     private List<Car> carsData;
-    @Inject DBEngine dbController;
+    @Inject
+    DBEngine dbController;
     private int ownerId;
 
-    public OwnerGarageFragmentPresenter(int ownerId, OwnerGarageContract.View myView) {
+    OwnerGarageFragmentPresenter(int ownerId, OwnerGarageContract.View myView) {
         this.myView = myView;
         this.ownerId = ownerId;
         CarManagerApplication.getDatabaseEngineComponent().inject(this);
@@ -33,7 +34,6 @@ public class OwnerGarageFragmentPresenter implements OwnerGarageContract.Present
         carsData.remove(position);
         myView.notifyDataChange(position, carsData.size());
     }
-
 
 
 }
