@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,13 +28,11 @@ class ChooseCarDialog extends Dialog {
     @BindView(R.id.btn_dialog_close)
     Button btnDialogClose;
 
-    private int ownerId;
     private List<Car> carsWithoutOwnerList;
     private RVItemClickListener clickListener;
 
-    ChooseCarDialog(Context context, int ownerId, List<Car> carsWithoutOwnersList, RVItemClickListener clickListener) {
+    ChooseCarDialog(Context context, List<Car> carsWithoutOwnersList, RVItemClickListener clickListener) {
         super(context);
-        this.ownerId = ownerId;
         this.carsWithoutOwnerList = carsWithoutOwnersList;
         this.clickListener = clickListener;
     }

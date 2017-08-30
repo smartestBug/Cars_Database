@@ -129,7 +129,7 @@ public class OwnerDetailsActivity extends AppCompatActivity implements OwnerDeta
 
     @Override
     public void showCarChooserDialog(List<Car> carList) {
-        ChooseCarDialog carChoose = new ChooseCarDialog(this, ownerId, carList, this);
+        ChooseCarDialog carChoose = new ChooseCarDialog(this, carList, this);
         carChoose.show();
     }
 
