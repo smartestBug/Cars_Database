@@ -1,6 +1,6 @@
 package com.msemyak.carsdb.activities.main.owners_list_fragment;
 
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Owner;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.msemyak.carsdb.model;
+package com.msemyak.carsdb.data.model;
 
 public class Owner {
 

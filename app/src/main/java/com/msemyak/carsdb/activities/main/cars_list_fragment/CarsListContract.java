@@ -1,6 +1,6 @@
 package com.msemyak.carsdb.activities.main.cars_list_fragment;
 
-import com.msemyak.carsdb.model.Car;
+import com.msemyak.carsdb.data.model.Car;
 
 import java.util.List;
 

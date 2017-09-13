@@ -1,7 +1,7 @@
 package com.msemyak.carsdb.activities.owner_details;
 
-import com.msemyak.carsdb.model.Car;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.model.Owner;
 
 import java.util.List;
 

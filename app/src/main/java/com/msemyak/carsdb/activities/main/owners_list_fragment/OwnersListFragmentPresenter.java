@@ -1,8 +1,8 @@
 package com.msemyak.carsdb.activities.main.owners_list_fragment;
 
 import com.msemyak.carsdb.CarManagerApplication;
-import com.msemyak.carsdb.model.DBEngine;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.DBEngineSQLite;
+import com.msemyak.carsdb.data.model.Owner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class OwnersListFragmentPresenter implements OwnersListContract.Presenter
     private List<Owner> ownersData;
     private List<Integer> ownerCarCount;
     @Inject
-    DBEngine dbController;
+    DBEngineSQLite dbController;
 
     OwnersListFragmentPresenter(OwnersListContract.View myView) {
         this.myView = myView;

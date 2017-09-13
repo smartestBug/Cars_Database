@@ -1,8 +1,8 @@
 package com.msemyak.carsdb.activities.main.cars_list_fragment;
 
 import com.msemyak.carsdb.CarManagerApplication;
-import com.msemyak.carsdb.model.Car;
-import com.msemyak.carsdb.model.DBEngine;
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.DBEngineSQLite;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class CarsListFragmentPresenter implements CarsListContract.Presenter {
     private CarsListContract.View myView;
     private List<Car> carsData;
     @Inject
-    DBEngine dbController;
+    DBEngineSQLite dbController;
 
     CarsListFragmentPresenter(CarsListContract.View myView) {
         this.myView = myView;

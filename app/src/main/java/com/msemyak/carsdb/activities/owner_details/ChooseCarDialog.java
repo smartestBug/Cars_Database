@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.msemyak.carsdb.R;
 import com.msemyak.carsdb.activities.adapters.RVAdapterCar;
 import com.msemyak.carsdb.activities.adapters.RVItemClickListener;
-import com.msemyak.carsdb.model.Car;
+import com.msemyak.carsdb.data.model.Car;
 
 import java.util.List;
 

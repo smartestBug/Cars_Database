@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.msemyak.carsdb.R;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Owner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

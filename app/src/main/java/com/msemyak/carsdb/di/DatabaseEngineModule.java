@@ -2,7 +2,7 @@ package com.msemyak.carsdb.di;
 
 import android.content.Context;
 
-import com.msemyak.carsdb.model.DBEngine;
+import com.msemyak.carsdb.data.DBEngineSQLite;
 
 import javax.inject.Singleton;
 
@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 
 // модуль даггера для инъекции объекта управления базой данных
-// дает нам объект класса DBEngine, Context получаем при инициации
+// дает нам объект класса DBEngineSQLite, Context получаем при инициации
 @Module
 public class DatabaseEngineModule {
 
@@ -22,8 +22,8 @@ public class DatabaseEngineModule {
 
     @Provides
     @Singleton
-    DBEngine provideDBEngine() {
-        return new DBEngine(context);
+    DBEngineSQLite provideDBEngine() {
+        return new DBEngineSQLite(context);
     }
 
 }

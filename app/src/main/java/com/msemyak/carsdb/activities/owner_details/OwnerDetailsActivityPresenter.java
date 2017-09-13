@@ -1,8 +1,8 @@
 package com.msemyak.carsdb.activities.owner_details;
 
 import com.msemyak.carsdb.CarManagerApplication;
-import com.msemyak.carsdb.model.DBEngine;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.DBEngineSQLite;
+import com.msemyak.carsdb.data.model.Owner;
 
 import javax.inject.Inject;
 
@@ -10,7 +10,7 @@ public class OwnerDetailsActivityPresenter implements OwnerDetailsContract.Prese
 
     private OwnerDetailsContract.View myView;
     @Inject
-    DBEngine dbController;
+    DBEngineSQLite dbController;
 
     public OwnerDetailsActivityPresenter(OwnerDetailsContract.View myView) {
         this.myView = myView;

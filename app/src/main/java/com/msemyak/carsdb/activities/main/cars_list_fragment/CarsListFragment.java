@@ -15,7 +15,7 @@ import com.msemyak.carsdb.activities.adapters.RVItemClickListener;
 import com.msemyak.carsdb.activities.car_details.CarDetailsActivity;
 
 import com.msemyak.carsdb.eventbus.eventFabVisible;
-import com.msemyak.carsdb.model.Car;
+import com.msemyak.carsdb.data.model.Car;
 
 import org.greenrobot.eventbus.EventBus;
 

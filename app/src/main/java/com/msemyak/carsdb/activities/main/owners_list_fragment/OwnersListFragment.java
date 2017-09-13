@@ -14,7 +14,7 @@ import com.msemyak.carsdb.activities.adapters.RVAdapterOwner;
 import com.msemyak.carsdb.activities.adapters.RVItemClickListener;
 import com.msemyak.carsdb.activities.owner_details.OwnerDetailsActivity;
 import com.msemyak.carsdb.eventbus.eventFabVisible;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Owner;
 
 import org.greenrobot.eventbus.EventBus;
 

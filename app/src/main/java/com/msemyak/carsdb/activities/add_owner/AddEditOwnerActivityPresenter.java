@@ -1,8 +1,8 @@
 package com.msemyak.carsdb.activities.add_owner;
 
 import com.msemyak.carsdb.CarManagerApplication;
-import com.msemyak.carsdb.model.DBEngine;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.DBEngineSQLite;
+import com.msemyak.carsdb.data.model.Owner;
 
 import javax.inject.Inject;
 
@@ -10,7 +10,7 @@ public class AddEditOwnerActivityPresenter implements AddEditOwnerContract.Prese
 
     private AddEditOwnerContract.View myView;
     @Inject
-    DBEngine dbController;
+    DBEngineSQLite dbController;
     static final int NO_SUCH_ID = -1;
 
     AddEditOwnerActivityPresenter(AddEditOwnerContract.View myView, int ownerId) {

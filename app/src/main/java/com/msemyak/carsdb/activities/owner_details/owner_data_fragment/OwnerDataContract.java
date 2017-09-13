@@ -1,6 +1,6 @@
 package com.msemyak.carsdb.activities.owner_details.owner_data_fragment;
 
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Owner;
 
 public interface OwnerDataContract {
     // view contract

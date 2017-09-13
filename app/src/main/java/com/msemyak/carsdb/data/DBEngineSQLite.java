@@ -1,4 +1,4 @@
-package com.msemyak.carsdb.model;
+package com.msemyak.carsdb.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,10 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.model.Owner;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBEngine extends SQLiteOpenHelper {
+public class DBEngineSQLite extends SQLiteOpenHelper implements DBEngine {
 
     // имя и версия базы данных
     private static final String DATABASE_NAME = "CarsAndOwners.db";
@@ -34,7 +37,7 @@ public class DBEngine extends SQLiteOpenHelper {
     private static final String CARS_COLUMN_YEAR = "year";
     private static final String CARS_COLUMN_REGNUMBER = "regnumber";
 
-    public DBEngine(Context context) {
+    public DBEngineSQLite(Context context) {
 
         //вызов предшественника создаст базу данных
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -94,6 +97,7 @@ public class DBEngine extends SQLiteOpenHelper {
      ************************/
 
     // добавить новый автомобиль
+    @Override
     public int addCar(Car car) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -112,18 +116,21 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает список всех автомобилей
+    @Override
     public List<Car> getAllCars() {
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME;
         return execQueryReturnCarLIst(selectQuery);
     }
 
     // возвращает список всех автомобилей без владельца
+    @Override
     public List<Car> getAllCarsWithoutOwner() {
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + " = 0";
         return execQueryReturnCarLIst(selectQuery);
     }
 
     // возвращает владельца конкретного автомобиля
+    @Override
     public List<Car> getOwnerCars(int ownerId) {
 
         String selectQuery = "SELECT  * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + "=" + ownerId;
@@ -156,6 +163,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает количество автомобилей, которые не принадлежат никомуу
+    @Override
     public int getCarsWithoutOwnerCount() {
 
         String selectQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + " = 0";
@@ -169,6 +177,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает конкретный автомобиль
+    @Override
     public Car getCar(int id) {
 
         String selectQuery = "SELECT  * FROM " + CARS_TABLE_NAME + " WHERE id=" + id;
@@ -184,6 +193,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // удаляем автомобиль
+    @Override
     public void deleteCar(int carId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(CARS_TABLE_NAME, CARS_COLUMN_ID + " = ?", new String[]{String.valueOf(carId)});
@@ -191,6 +201,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // обновляем данные про автомобиль
+    @Override
     public int updateCar(Car car) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -205,6 +216,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // связываем владельца и автомобиль
+    @Override
     public int linkCarToOwner(int ownerId, int carId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -224,6 +236,7 @@ public class DBEngine extends SQLiteOpenHelper {
      ************************/
 
     // создаем нового владельца
+    @Override
     public int addOwner(Owner owner) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -242,6 +255,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // удаляем владельца
+    @Override
     public void deleteOwner(int ownerId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -258,6 +272,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает конкретного пользователя
+    @Override
     public Owner getOwner(int id) {
 
         String selectQuery = "SELECT  * FROM " + OWNERS_TABLE_NAME + " WHERE id=" + id;
@@ -273,6 +288,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // обновление записи конкретного владельца
+    @Override
     public int updateOwner(Owner owner) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -287,6 +303,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает количество автомобилей, принадлежащих конкретному владельцу
+    @Override
     public int getOwnerCarsCount(int ownerId) {
 
         String countQuery = "SELECT * FROM " + CARS_TABLE_NAME + " WHERE " + CARS_COLUMN_OWNERID + "=" + ownerId;
@@ -298,6 +315,7 @@ public class DBEngine extends SQLiteOpenHelper {
     }
 
     // возвращает список всех владельцев
+    @Override
     public List<Owner> getAllOwners() {
         List<Owner> ownersList = new ArrayList<>();
 

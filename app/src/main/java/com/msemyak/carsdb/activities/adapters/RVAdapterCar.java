@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.msemyak.carsdb.R;
-import com.msemyak.carsdb.model.Car;
+import com.msemyak.carsdb.data.model.Car;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

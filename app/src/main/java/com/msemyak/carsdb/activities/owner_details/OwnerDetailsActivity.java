@@ -17,8 +17,8 @@ import com.msemyak.carsdb.activities.adapters.RVItemClickListener;
 import com.msemyak.carsdb.activities.add_owner.AddEditOwnerActivity;
 import com.msemyak.carsdb.activities.owner_details.owner_data_fragment.OwnerDataFragment;
 import com.msemyak.carsdb.activities.owner_details.owner_garage_fragment.OwnerGarageFragment;
-import com.msemyak.carsdb.model.Car;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.model.Owner;
 
 import com.msemyak.carsdb.activities.adapters.TabViewAdapter;
 import com.msemyak.carsdb.activities.main.MainActivity;

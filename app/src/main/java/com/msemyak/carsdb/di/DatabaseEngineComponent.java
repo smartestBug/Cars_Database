@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 // комопнент для связи модулей даггера
-// определяем куда будем делать инъекции объекта DBEngine
+// определяем куда будем делать инъекции объекта DBEngineSQLite
 @Singleton
 @Component(modules = {DatabaseEngineModule.class})
 public interface DatabaseEngineComponent {

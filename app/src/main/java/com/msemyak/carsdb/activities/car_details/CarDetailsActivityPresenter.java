@@ -1,9 +1,9 @@
 package com.msemyak.carsdb.activities.car_details;
 
 import com.msemyak.carsdb.CarManagerApplication;
-import com.msemyak.carsdb.model.Car;
-import com.msemyak.carsdb.model.DBEngine;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.DBEngineSQLite;
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.model.Owner;
 
 import javax.inject.Inject;
 
@@ -11,7 +11,7 @@ public class CarDetailsActivityPresenter implements CarDetailsContract.Presenter
 
     private CarDetailsContract.View myView;
     @Inject
-    DBEngine dbController;
+    DBEngineSQLite dbController;
 
     public CarDetailsActivityPresenter(CarDetailsContract.View myView) {
         this.myView = myView;

@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.msemyak.carsdb.R;
-import com.msemyak.carsdb.model.Car;
-import com.msemyak.carsdb.model.Owner;
+import com.msemyak.carsdb.data.model.Car;
+import com.msemyak.carsdb.data.model.Owner;
 import com.msemyak.carsdb.activities.add_car.AddEditCarActivity;
 
 import butterknife.BindView;
